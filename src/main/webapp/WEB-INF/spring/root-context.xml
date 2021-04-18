@@ -13,6 +13,8 @@
 	<bean name = "dao" class = "com.Trello.DAO.GenericDAO" />
 	<bean name = "user_dao" class = "com.Trello.DAO.UserDAO" />
 	<bean name = "workspace_dao" class = "com.Trello.DAO.WorkspaceDAO" />
+	<bean name = "invite_dao" class = "com.Trello.DAO.InviteDAO" />
+	<bean name = "card_dao" class = "com.Trello.DAO.CardDAO" />
 	
 		
 </beans>

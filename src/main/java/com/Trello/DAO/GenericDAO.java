@@ -15,6 +15,7 @@ public class GenericDAO extends DAO{
 
 
     public void delete(final Object object){
+    	beginTransaction();
     	getSession().delete(object);
     	commit();
     }
@@ -26,12 +27,14 @@ public class GenericDAO extends DAO{
     
     /***/
     public <T> void merge(final T o)   {
+    	beginTransaction();
     	getSession().merge(o);
     	commit();
     }
 
     /***/
     public <T> void saveOrUpdate(final T o){
+    	beginTransaction();
 		getSession().saveOrUpdate(o);
 		commit();
     }

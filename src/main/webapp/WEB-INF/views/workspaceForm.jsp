@@ -5,25 +5,21 @@
 <HTML>
   <HEAD>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <TITLE>Register</TITLE>
+    <TITLE>Add Workspace</TITLE>
   </HEAD>
   <BODY>
     <div class="card mx-auto" style="width: 24rem;">
         <div class="card-body">
             <h5 class="card-title" style="text-align:center">Please enter details below</h5>
-            <form:form action="addUser.htm" modelAttribute="user">
+            <form:form action="addWorkspace.htm" modelAttribute="workspace" method="POST">
                 <div class="form-group">
                   <label for="name">Name</label>
                   <form:input path="name"/>       
                 </div>
                 <div class="form-group">
-                  <label for="username">Username</label>
-                  <form:input path="username"/>
-                </div>
-                <div class="form-group">
-                  <label for="password">Password</label>
-                  <form:password path="password"/>
-                </div>      
+                  <label for="description">Description</label>
+                  <form:textarea path="description"/>
+                </div>   
                  <input type="submit" value="ADD"/>
             </form:form>
         </div>

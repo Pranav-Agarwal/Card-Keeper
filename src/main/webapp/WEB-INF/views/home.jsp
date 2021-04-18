@@ -12,7 +12,7 @@
 			  <label for="username">username:</label><br>
 			  <input type="text" id="username" name="username"><br>
 			  <label for="password">password</label><br>
-			  <input type="text" id="password" name="password">
+			  <input type="password" id="password" name="password">
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>
             <a href="register.htm">Register</a>
