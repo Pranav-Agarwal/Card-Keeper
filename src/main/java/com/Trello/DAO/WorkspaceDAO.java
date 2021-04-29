@@ -1,10 +1,12 @@
 package com.Trello.DAO;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.hibernate.Criteria;
+import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 
 import com.Trello.pojo.Admin;
@@ -30,7 +32,7 @@ public class WorkspaceDAO extends DAO{
     	for(Admin a : tempa) {
     		result.add(a.getWorkspace());
     	}
-    	
+    	close();
     	return result;
     }
     
@@ -39,6 +41,7 @@ public class WorkspaceDAO extends DAO{
     	cr1.add(Restrictions.eq("user", user));
     	cr1.add(Restrictions.eq("workspace", workspace));
     	Admin a = (Admin) cr1.uniqueResult();
+    	close();
     	return a;
     }
     
@@ -47,6 +50,7 @@ public class WorkspaceDAO extends DAO{
     	cr1.add(Restrictions.eq("user", user));
     	cr1.add(Restrictions.eq("workspace", workspace));
     	Member m = (Member) cr1.uniqueResult();
+    	close();
     	return m;
     }
     
@@ -65,6 +69,7 @@ public class WorkspaceDAO extends DAO{
     		getSession().save(member);
     	}
 		commit();
+		close();
     }
     
     public List<User> getUsers(Workspace workspace){
@@ -79,7 +84,8 @@ public class WorkspaceDAO extends DAO{
     	Criteria cr1 = getSession().createCriteria(Admin.class);
     	cr1.add(Restrictions.eq("workspace",workspace));
     	List<Admin> tempa = cr1.list();
-    	for(Admin admin : tempa) result.add(admin.getUser());    	
+    	for(Admin admin : tempa) result.add(admin.getUser());
+    	close();
     	return result;
     }
     
@@ -89,25 +95,31 @@ public class WorkspaceDAO extends DAO{
     	cr2.add(Restrictions.eq("workspace",workspace));
     	List<Member> tempm = cr2.list();
     	for(Member member : tempm) result.add(member.getUser());
+    	close();
     	return result;
     }
     
     public List<Card> getCardsByCardlist(CardList cardlist){
+    	Session s = getSession();
     	List<Card> cards;
-    	Criteria cr1 = getSession().createCriteria(Card.class);
+    	Criteria cr1 = s.createCriteria(Card.class);
     	cr1.add(Restrictions.eq("cardlist",cardlist));
     	cards = cr1.list();
+		cards.sort((Card a, Card b) -> a.getId() - b.getId());
     	return cards;
     }
     
-    public HashMap<CardList,List<Card>> getCardlistsByWorkspace(Workspace workspace){
-    	HashMap<CardList,List<Card>> listMap = new HashMap();
-    	Criteria cr1 = getSession().createCriteria(CardList.class);
+    public Map<CardList,List<Card>> getCardlistsByWorkspace(Workspace workspace){
+    	Session s = getSession();
+    	Map<CardList,List<Card>> listMap = new LinkedHashMap();
+    	Criteria cr1 = s.createCriteria(CardList.class);
     	cr1.add(Restrictions.eq("workspace",workspace));
     	List<CardList> lists = cr1.list();
+		lists.sort((CardList a, CardList b) -> a.getId() - b.getId());
     	for(CardList cl : lists) {
     		listMap.put(cl, getCardsByCardlist(cl));
     	}
+    	close();
     	return listMap;
     }
     

@@ -1,18 +1,12 @@
 package com.Trello.pojo;
 
-import java.util.List;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinTable;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToOne;
 
 @Entity(name="workspace")
 public class Workspace {
@@ -26,7 +20,19 @@ public class Workspace {
 
 	@Column(name="description")
 	private String description;
+		
+    @ManyToOne
+    @JoinColumn(name="bg_id", nullable=true)
+	private WorkspaceBg workspaceBg;
 	
+	public WorkspaceBg getWorkspaceBg() {
+		return workspaceBg;
+	}
+
+	public void setWorkspaceBg(WorkspaceBg workspaceBg) {
+		this.workspaceBg = workspaceBg;
+	}
+
 	public int getId() {
 		return id;
 	}

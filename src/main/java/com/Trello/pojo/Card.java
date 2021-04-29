@@ -1,10 +1,6 @@
 package com.Trello.pojo;
 
-import java.time.LocalDate;
 import java.util.Date;
-import java.util.List;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,7 +8,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 
 @Entity(name="card")
 public class Card {
@@ -36,10 +31,20 @@ public class Card {
 	private CardList cardlist;
 	
 	@Column(name="duedate")
-	private LocalDate dueDate;
+	private Date dueDate;
+	
+	@Column(name="color")
+	private String color;
 	
 	@Column(name="isdone")
 	private Boolean isDone;
+	
+	public String getColor() {
+		return color;
+	}
+	public void setColor(String color) {
+		this.color = color;
+	}
 	
 	public Boolean getIsDone() {
 		return isDone;
@@ -78,10 +83,10 @@ public class Card {
 	public void setAssignedTo(User assignedTo) {
 		this.assignedTo = assignedTo;
 	}
-	public LocalDate getDueDate() {
+	public Date getDueDate() {
 		return dueDate;
 	}
-	public void setDueDate(LocalDate dueDate) {
+	public void setDueDate(Date dueDate) {
 		this.dueDate = dueDate;
 	}
 	

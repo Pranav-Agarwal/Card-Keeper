@@ -1,31 +1,37 @@
 <!DOCTYPE html>
 
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-
+<%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>
 <HTML>
   <HEAD>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <TITLE>Add Workspace</TITLE>
   </HEAD>
   <BODY>
-    <div class="card mx-auto" style="width: 24rem;">
-        <div class="card-body">
-            <h5 class="card-title" style="text-align:center">Please enter details below</h5>
-            <form:form action="addWorkspace.htm" modelAttribute="workspace" method="POST">
+      <div class="card mx-auto" style="width: 30rem;">
+        <div class="card-body cardform-body">
+        <h5 class="card-title" style="text-align:center">Create Workspace</h5>
+            <form:form action="/App/dashboard/addWorkspace.htm" modelAttribute="workspace" method="POST">
                 <div class="form-group">
                   <label for="name">Name</label>
-                  <form:input path="name"/>       
+                  <form:input maxlength="20" required="required" class="forminput" path="name"/>       
                 </div>
                 <div class="form-group">
                   <label for="description">Description</label>
-                  <form:textarea path="description"/>
-                </div>   
-                 <input type="submit" value="ADD"/>
-            </form:form>
+                  <form:textarea maxlength="99" class="forminput" path="description"/>
+                </div>
+                <label>Background</label>
+                <div class="images-container d-flex flex-wrap flex-row">
+                <c:forEach var="image" items = "${requestScope.images}">
+                	<div style="text-align: center;height=120px !important;display:block">
+                     <div class="bg-image" style="background-image:url('<c:url value="/resources/images/backgrounds/${image.filename}"/>')">
+  					 </div><br>
+  					 <form:radiobutton path="workspaceBg" value="${image.id}"/>
+  					 </div>
+                </c:forEach>
+                </div>
+                 <button type="submit" class="btn btn-secondary">Create</button>
+            </form:form>            
         </div>
     </div>
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
   </BODY>
 </HTML>

@@ -3,10 +3,11 @@ package com.Trello.Controller;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.ConstraintViolationException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -14,11 +15,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.Trello.DAO.CardDAO;
 import com.Trello.DAO.GenericDAO;
-import com.Trello.DAO.InviteDAO;
 import com.Trello.DAO.UserDAO;
 import com.Trello.DAO.WorkspaceDAO;
 import com.Trello.pojo.Card;
-import com.Trello.pojo.Invite;
 import com.Trello.pojo.User;
 import com.Trello.pojo.Workspace;
 
@@ -35,31 +34,22 @@ public class AuthController {
 	private WorkspaceDAO workspaceDao;
 	
 	@Autowired
-	private InviteDAO inviteDao;
-	
-	@Autowired
 	private CardDAO cardDao;
 	
-    @RequestMapping(value="/login.htm", method=RequestMethod.GET)
+    @RequestMapping(value="/login.htm", method=RequestMethod.POST)
     public String login(@RequestParam String username,@RequestParam String password, HttpServletRequest request){
     	User user = userDao.getUserByUsername(username);
     	if(user!=null && user.getPassword().equals(password)) {
     		request.getSession().setAttribute("user", user);
-    		List<Workspace> res = workspaceDao.getWorkspacesByUser(user);
-    		List<Invite> inv = inviteDao.getInvitesByUser(user);
-    		List<Card> cards = cardDao.getAssignedCardsByUser(user);
-    		//System.out.println(user.getName());
-    		request.getSession().setAttribute("workspaces", res);
-    		request.getSession().setAttribute("invites", inv);
-    		request.getSession().setAttribute("cards", cards);
-    		//System.out.println(inv.size());
-    		return "dashboard";
+    		return "redirect:/dashboard/dashboard.htm";
     	}
     	else {
-    		request.setAttribute("message", "Invalid Credentials");
-    		return "loginFailed";
+    		request.setAttribute("message", "Incorrect Username or Password");
+    		return "home";
     	}
     }
+    
+    
     
     @RequestMapping(value="/register.htm", method=RequestMethod.GET)
     public String register(@ModelAttribute("user") User user){
@@ -69,13 +59,19 @@ public class AuthController {
     @RequestMapping(value="/addUser.htm", method=RequestMethod.POST)
     public String addUser(@ModelAttribute("user") User user, HttpServletRequest request){
     	if(userDao.getUserByUsername(user.getUsername())==null) {
-    		dao.save(user);
+    		try{
+    			dao.save(user);
+    		}
+    		catch (ConstraintViolationException e) {
+        		request.setAttribute("message", "Please Enter a password between 8 and 16 characters");
+        		return "register";
+    		}
     		request.getSession().setAttribute("user", user);
-    		return "dashboard";
+    		return "redirect:/dashboard/dashboard.htm";
     	}
     	else {
-    		request.setAttribute("message", "Username Taken");
-    		return "loginFailed";
+    		request.setAttribute("message", "Username Already Taken");
+    		return "register";
     	}
     }
     

@@ -1,25 +1,36 @@
 <!DOCTYPE html>
+<%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>
 <HTML>
   <HEAD>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <TITLE>Movie Store</TITLE>
+  <link href="<c:url value="/resources/css/bootstrap.min.css" />" rel="stylesheet">
+  <link href="<c:url value="/resources/css/login.css" />" rel="stylesheet">
+    <TITLE>Card Keeper - Login</TITLE>
   </HEAD>
   <BODY>
-    <div class="card mx-auto" style="width: 24rem;">
-        <div class="card-body">
-            <h5 class="card-title" style="text-align:center">Welcome to the Movie Store</h5>
-            <form action="login.htm" method="GET" role="form">
-			  <label for="username">username:</label><br>
-			  <input type="text" id="username" name="username"><br>
-			  <label for="password">password</label><br>
-			  <input type="password" id="password" name="password">
-                <button type="submit" class="btn btn-primary">Submit</button>
-            </form>
-            <a href="register.htm">Register</a>
-        </div>
-    </div>
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+	  <div class="sidenav">
+      </div>
+      <div class="main">
+         <div class="col-md-10 col-sm-12">
+         <div class="login-main-text">
+            <h2><img src="<c:url value="/resources/images/card-keeper-logo.png"/>"/></h2>
+            <p>Login or register from <a href="register.htm">here</a> to get started</p>
+            <p id="error-message">${requestScope.message}</p>
+         </div>
+            <div class="login-form">
+               <form action="login.htm" method="POST" role="form" cssClass="form-horizontal">
+                  <div class="form-group">
+                     <input type="text" maxlength="15" required class="form-control" placeholder="User Name" id="username" name="username">
+                  </div>
+                  <div class="form-group">
+                     <input type="password" maxlength="20" required class="form-control" placeholder="Password" id="password" name="password">
+                  </div>
+                  <button type="submit" class="btn btn-black">Login</button>
+               </form>
+            </div>
+         </div>
+      </div>
+	<script src="<c:url value="/resources/js/jquery-3.6.0.min.js" />"></script>
+	<script src="<c:url value="/resources/js/bootstrap.min.js" />"></script>
+	<script src="<c:url value="/resources/js/popper.min.js" />"></script>
   </BODY>
 </HTML>
