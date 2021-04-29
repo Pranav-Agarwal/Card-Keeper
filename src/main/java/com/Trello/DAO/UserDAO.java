@@ -9,10 +9,10 @@ public class UserDAO extends DAO{
 	
 	
     public User getUserByUsername(final String username){
-    	System.out.println(username);
     	Criteria cr = getSession().createCriteria(User.class);
     	cr.add(Restrictions.eq("username", username));
     	User result = (User) cr.uniqueResult();
+    	close();
     	return result;
     }
 }

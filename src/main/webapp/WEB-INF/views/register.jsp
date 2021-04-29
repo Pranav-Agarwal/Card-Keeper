@@ -1,35 +1,45 @@
 <!DOCTYPE html>
 
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-
+<%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>
 <HTML>
   <HEAD>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <TITLE>Register</TITLE>
+<link href="<c:url value="/resources/css/bootstrap.min.css" />" rel="stylesheet">
+<link href="<c:url value="/resources/css/login.css" />" rel="stylesheet">
+    <TITLE>Card Keeper - Register</TITLE>
   </HEAD>
   <BODY>
-    <div class="card mx-auto" style="width: 24rem;">
-        <div class="card-body">
-            <h5 class="card-title" style="text-align:center">Please enter details below</h5>
+<div class="sidenav">
+      </div>
+      <div class="main">
+         <div class="col-md-10 col-sm-12">
+         <div class="login-main-text">
+            <h2><img src="<c:url value="/resources/images/card-keeper-logo.png"/>"/><br></h2>
+            <p>Back to <a href="logout.htm">Login</a></p>
+            <p id="error-message">${requestScope.message}</p>
+         </div>
+            <div class="login-form">
             <form:form action="addUser.htm" modelAttribute="user">
                 <div class="form-group">
                   <label for="name">Name</label>
-                  <form:input path="name"/>       
+                  <form:input maxlength="20" required="required" class="reg-input right" path="name"/>       
                 </div>
                 <div class="form-group">
                   <label for="username">Username</label>
-                  <form:input path="username"/>
+                  <form:input maxlength="15" required="required" class="reg-input right" path="username"/>
                 </div>
                 <div class="form-group">
                   <label for="password">Password</label>
-                  <form:input path="password"/>
+                  <form:password maxlength="16" required="required" class="reg-input right" path="password"/>
                 </div>      
-                 <input type="submit" value="ADD"/>
+                 <button type="submit" class="btn btn-black">Register</button>
             </form:form>
-        </div>
-    </div>
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+            </div>
+         </div>
+      </div>
+	<script src="<c:url value="/resources/js/jquery-3.6.0.min.js" />"></script>
+	<script src="<c:url value="/resources/js/bootstrap.min.js" />"></script>
+	<script src="<c:url value="/resources/js/popper.min.js" />"></script>
   </BODY>
 </HTML>
+

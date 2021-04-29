@@ -1,8 +1,5 @@
 package com.Trello.pojo;
 
-import java.util.List;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,7 +7,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 
 @Entity(name="cardlist")
 public class CardList {
@@ -19,17 +15,24 @@ public class CardList {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
-	@OneToMany(cascade=CascadeType.ALL,orphanRemoval=true,mappedBy="id")
-	private List<Card> cards;
+    @ManyToOne
+    @JoinColumn(name="workspace_id", nullable=false)
+	private Workspace workspace;
 	
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
 	@Column(name="name")
 	private String name;
 	
-	public List<Card> getCards() {
-		return cards;
+	public Workspace getWorkspace() {
+		return workspace;
 	}
-	public void setCards(List<Card> cards) {
-		this.cards = cards;
+	public void setWorkspace(Workspace workspace) {
+		this.workspace = workspace;
 	}
 	public String getName() {
 		return name;

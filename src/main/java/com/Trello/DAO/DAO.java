@@ -4,14 +4,8 @@ import java.util.logging.Logger;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
-
-import com.Trello.pojo.Card;
-import com.Trello.pojo.CardList;
-import com.Trello.pojo.Invite;
-import com.Trello.pojo.Task;
-import com.Trello.pojo.User;
-import com.Trello.pojo.Workspace;
 
 public class DAO {
 	private static final Logger log = Logger.getAnonymousLogger();
@@ -33,8 +27,8 @@ public class DAO {
 		return session;
 	}
 	
-	protected void beginTransaction() {
-		getSession().beginTransaction();
+	protected Transaction beginTransaction() {
+		return getSession().beginTransaction();
 	}
 	
 	protected void commit() {

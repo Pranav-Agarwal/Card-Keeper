@@ -1,9 +1,6 @@
 package com.Trello.pojo;
 
 import java.util.Date;
-import java.util.List;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,7 +8,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 
 @Entity(name="card")
 public class Card {
@@ -26,17 +22,42 @@ public class Card {
 	@Column(name="description")
 	private String description;
 	
-	@OneToMany(cascade=CascadeType.ALL,orphanRemoval=true,mappedBy="id")
-	private List<Task> tasks;
-	
     @ManyToOne
     @JoinColumn(name="user_id", nullable=true)
 	private User assignedTo;
+    
+    @ManyToOne
+    @JoinColumn(name="cardlist_id", nullable=false)
+	private CardList cardlist;
 	
 	@Column(name="duedate")
 	private Date dueDate;
 	
+	@Column(name="color")
+	private String color;
 	
+	@Column(name="isdone")
+	private Boolean isDone;
+	
+	public String getColor() {
+		return color;
+	}
+	public void setColor(String color) {
+		this.color = color;
+	}
+	
+	public Boolean getIsDone() {
+		return isDone;
+	}
+	public void setIsDone(Boolean isDone) {
+		this.isDone = isDone;
+	}
+	public CardList getCardlist() {
+		return cardlist;
+	}
+	public void setCardlist(CardList cardlist) {
+		this.cardlist = cardlist;
+	}
 	public int getId() {
 		return id;
 	}
@@ -55,12 +76,7 @@ public class Card {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public List<Task> getTasks() {
-		return tasks;
-	}
-	public void setTasks(List<Task> tasks) {
-		this.tasks = tasks;
-	}
+
 	public User getAssignedTo() {
 		return assignedTo;
 	}
